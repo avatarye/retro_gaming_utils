@@ -1,0 +1,20 @@
+[project]
+name = "retro-gaming-utils"
+version = "0.1.1"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "click>=8.2.1",
+    "rich>=14.1.0",
+]
+
+[project.scripts]
+rgu = "retro_gaming_utilities.cli:cli"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/retro_gaming_utilities"]
