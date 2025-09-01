@@ -4,8 +4,8 @@ A command-line interface for retro gaming enthusiasts to manage, fix, and enhanc
 
 ## Features
 
-- **Fix Command**: Automatically fix common issues with retro gaming files
-- **Analyze Command**: Generate detailed reports about your retro gaming collection
+- **Remove Number Index**: Remove number prefixes from ROM file names
+- **Remove Redundant ROMs**: Remove uncompressed ROM files when compressed versions exist
 - **Version Command**: Display version information
 
 ## Installation
@@ -40,46 +40,35 @@ After installation, you can use the `rgu` command:
 rgu --help
 
 # Show version
-rgu version
+rgu --version
 
 # Show help for a specific command
-rgu fix --help
-rgu analyze --help
+rgu remove-num-index --help
+rgu remove-redundant-roms --help
 ```
 
-### Fix Command
+### Remove Number Index Command
 
-The `fix` command helps resolve common issues with retro gaming files:
+The `remove-num-index` command removes number prefixes from ROM file names:
 
 ```bash
-# Fix a single file
-rgu fix /path/to/game.rom
+# Remove number index from files in a directory
+rgu remove-num-index /path/to/roms/
 
-# Fix all files in a directory
-rgu fix /path/to/roms/
-
-# Dry run mode (show what would be fixed without making changes)
-rgu fix --dry-run /path/to/roms/
-
-# Verbose output
-rgu fix -v /path/to/roms/
+# Dry run mode (show what would be renamed without making changes)
+rgu remove-num-index --dry-run /path/to/roms/
 ```
 
-### Analyze Command
+### Remove Redundant ROMs Command
 
-The `analyze` command provides detailed information about your retro gaming files:
+The `remove-redundant-roms` command removes uncompressed ROM files when compressed versions exist:
 
 ```bash
-# Analyze a single file
-rgu analyze /path/to/game.rom
+# Remove redundant ROM files in a directory
+rgu remove-redundant-roms /path/to/roms/
 
-# Analyze a directory
-rgu analyze /path/to/roms/
-
-# Output in different formats
-rgu analyze --format json /path/to/roms/
-rgu analyze --format yaml /path/to/roms/
-rgu analyze --format text /path/to/roms/  # default
+# Dry run mode (show what would be removed without making changes)
+rgu remove-redundant-roms --dry-run /path/to/roms/
 ```
 
 ## Development
@@ -96,26 +85,20 @@ src/
 └── README.md           # This file
 ```
 
-### Testing
-
-Run the test script to verify the CLI works:
-
-```bash
-python test_cli.py
-```
-
 ### Adding New Commands
 
 To add new commands, edit `cli.py` and add new functions decorated with `@cli.command()`.
 
 ### Extending File Operations
 
-Modify the functions in `files.py` to add real retro gaming file validation and fixing logic.
+The `files.py` module contains the core functionality:
+- `remove_num_index_from_file_name()`: Removes number prefixes from file names
+- `remove_redundant_roms()`: Removes uncompressed ROMs when compressed versions exist
 
 ## Dependencies
 
-- **Click**: CLI framework
-- **Rich**: Enhanced terminal output (planned for future use)
+- **Click**: CLI framework (>=8.2.1)
+- **Rich**: Enhanced terminal output (>=14.1.0)
 
 ## License
 

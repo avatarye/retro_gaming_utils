@@ -47,13 +47,15 @@ def remove_redundant_roms(dir: Path, dry_run: bool = True) -> bool:
     dir = Path(dir)
     files_to_remove = []
     file_types_to_preserve = ('.zip', '.7z', '.rar', '.tar', '.gz', '.bz2', '.xz')
+    file_types_to_remove = ('.bin', '.pce')
 
     for file_type in file_types_to_preserve:
         files_to_check = [file for file in dir.iterdir() if file.is_file() and file.suffix.lower() == file_type]
         for file in files_to_check:
-            uncompressed_file = file.with_suffix('.bin')
-            if uncompressed_file.exists():
-                files_to_remove.append(uncompressed_file)
+            for file_type_to_remove in file_types_to_remove:
+                uncompressed_file = file.with_suffix(file_type_to_remove)
+                if uncompressed_file.exists():
+                    files_to_remove.append(uncompressed_file)
 
     for file in files_to_remove:
         if not dry_run:
